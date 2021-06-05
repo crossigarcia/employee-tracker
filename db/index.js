@@ -38,6 +38,25 @@ class DB {
 
    }
 
+   //need to add department name...second LEFT JOIN
+   viewAllEmployees() {
+      return this.connection.query(
+         `SELECT 
+            employee.id,
+            employee.first_name,
+            employee.last_name,
+            role.title,
+            role.salary,
+            employee.manager_id
+         FROM
+            employee
+         LEFT JOIN
+            role ON
+            employee.role_id = role.id
+         `
+      );
+   }
+
    createDepartment(department) {
       return this.connection.query(
          `
