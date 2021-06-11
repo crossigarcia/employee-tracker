@@ -13,6 +13,7 @@ CREATE TABLE role (
    salary INTEGER UNSIGNED NOT NULL,
    department_id INTEGER NOT NULL,
    CONSTRAINT fk_department FOREIGN KEY(department_id) REFERENCES department(id) ON DELETE CASCADE
+);
 
 CREATE TABLE employee (
    id INTEGER AUTO_INCREMENT PRIMARY KEY,
