@@ -1,14 +1,19 @@
 const inquirer = require('inquirer');
 const db = require('./db');
 require('console.table');
+const figlet = require("figlet");
 
 //start inquirer prompts
 function startApp() {
-   console.log(`
-* * * * * * * * * * * * * * * * *
-*  Hogwarts Museum of Fine Arts *
-* * * * * * * * * * * * * * * * *
-   `);
+   figlet(`Hogwarts Museum of Modern Art`, function (err, data) {
+     if (err) {
+       console.log("Something went wrong...");
+       console.dir(err);
+       return;
+     }
+     console.log(data);
+   });
+
    return inquirer
      .prompt([
        {

@@ -26,7 +26,7 @@ class DB {
             role.id,
             role.title,
             role.salary,
-            department.name
+            department.name as department_name
          FROM 
             role
          LEFT JOIN
@@ -44,9 +44,9 @@ class DB {
             employee.id,
             employee.first_name,
             employee.last_name,
-            role.title,
+            role.title as role,
             role.salary,
-            department.name,
+            department.name as department_name,
             employee.manager_id
          FROM
             employee
