@@ -2,10 +2,10 @@ const inquirer = require('inquirer');
 const db = require('./db');
 require('console.table');
 const figlet = require("figlet");
+const { viewEmployeesByManager } = require('./db');
 
-//start inquirer prompts
-function startApp() {
-   figlet(`Hogwarts Museum of Modern Art`, function (err, data) {
+function titleDisplay() {
+   figlet(`Employee Tracker`, function (err, data) {
      if (err) {
        console.log("Something went wrong...");
        console.dir(err);
@@ -13,6 +13,10 @@ function startApp() {
      }
      console.log(data);
    });
+};
+
+//start inquirer prompts
+function startApp() {
 
    return inquirer
      .prompt([
@@ -24,12 +28,14 @@ function startApp() {
            "View all departments",
            "View all roles",
            "View all employees",
+         //   "View employee's by manager",
            new inquirer.Separator(),
            "Add a department",
            "Add a role",
            "Add an employee",
            new inquirer.Separator(),
-           "Update employee information",
+           "Update an employee role",
+           "Update an employee's manager",
            new inquirer.Separator()
          ],
        },
@@ -47,9 +53,13 @@ function startApp() {
          case "Add a role":
            return createRole();
          case "Add an employee":
-            return addEmployee();
-         case "Update employee information":
-            return updateEmployee();  
+           return addEmployee();
+         case "Update an employee role":
+           return updateEmployeeRole();
+         case "Update an employee's manager":
+            return updateEmployeeManager();
+         // case "View employee's by manager":
+         //    return viewEmployeesByManager();
        }
      });
 };
@@ -77,6 +87,27 @@ async function viewAllEmployees() {
 
    startApp();
 };
+
+// async function viewEmployeesByManager() {
+//    const managers = await db.viewAllEmployees();
+//    const listManagers = managers.map(({ id, first_name, last_name }) => ({
+//      name: `${first_name} ${last_name}`,
+//      value: id,
+//    }));
+   
+//    const manager_id = await inquirer.prompt([
+//       {
+//          type: 'list',
+//          name: 'manager_id',
+//          message: 'Which managers employees would you like to see?',
+//          choices: listManagers
+//       }
+//    ]);
+
+//    console.table();
+
+//    startApp();
+// }
 
 async function createDepartment() {
    const department = await inquirer.prompt([
@@ -168,7 +199,7 @@ async function addEmployee() {
    startApp();
 };
 
-async function updateEmployee() {
+async function updateEmployeeRole() {
    const employees = await db.viewAllEmployees();
    const listEmployees = employees.map(({id, first_name, last_name}) => ({
       name: `${first_name} ${last_name}`,
@@ -199,9 +230,48 @@ async function updateEmployee() {
      }
    ]);
 
-   await db.updateEmployee(role_id, employee_id);
+   await db.updateEmployeeRole(role_id, employee_id);
    console.log('Employee role updated!');
    startApp();
 }
- 
+
+async function updateEmployeeManager() {
+  const employees = await db.viewAllEmployees();
+  const listEmployees = employees.map(({ id, first_name, last_name }) => ({
+    name: `${first_name} ${last_name}`,
+    value: id,
+  }));
+
+  const { employee_id } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "employee_id",
+      message: "Which employee would you like to update?",
+      choices: listEmployees,
+    },
+  ]);
+
+  const managers = await db.viewAllEmployees();
+  const listManagers = managers.map(({ id, first_name, last_name }) => ({
+    name: `${first_name} ${last_name}`,
+    value: id,
+  }));
+
+// listManagers.unshift({ name: "None", value: null });
+
+  const { manager_id } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "manager_id",
+      message: "Who is their new manager?",
+      choices: listManagers,
+    },
+  ]);
+
+  await db.updateEmployeeManager(manager_id, employee_id);
+  console.log("Employee's manager updated!");
+  startApp();
+}
+
 startApp();
+titleDisplay();

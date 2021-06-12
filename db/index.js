@@ -60,6 +60,20 @@ class DB {
       );
    }
 
+   // viewEmployeesByManager(manager_id) {
+   //    return this.connection.query(
+   //       `
+   //       SELECT 
+   //          * 
+   //       FROM 
+   //          employee
+   //       WHERE
+   //          manager_id = '?'
+   //       `,
+   //       manager_id
+   //    );
+   // }
+
    createDepartment(department) {
       return this.connection.query(
          `
@@ -96,7 +110,7 @@ class DB {
       );
    }
 
-   updateEmployee(role_id, employee_id) {
+   updateEmployeeRole(role_id, employee_id) {
       return this.connection.query(
          `
          UPDATE 
@@ -108,6 +122,20 @@ class DB {
 
          `,
          [role_id, employee_id]
+      );
+   }
+
+   updateEmployeeManager(manager_id, employee_id) {
+      return this.connection.query(
+         `
+         UPDATE
+            employee
+         SET
+            manager_id = '?'
+         WHERE
+            id = '?'
+         `,
+         [manager_id, employee_id]
       );
    }
 }
