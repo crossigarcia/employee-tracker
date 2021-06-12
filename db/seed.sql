@@ -5,8 +5,8 @@ INSERT INTO department
 VALUES
     ('Curatorial'),
     ('Conservation'),
-    ('Facilities'),
-    ('Human Resources');
+    ('Groundskeeping'),
+    ('Muggle Resources');
 
 INSERT INTO role
     (title, salary, department_id)
@@ -15,11 +15,11 @@ VALUES
     ('Curatorial Assistant', 500000, 1),
     ('Head of Conservation', 50000, 2),
     ('Associate Conservator', 1000000, 2),
-    ('Facilities Director', 1000000, 3),
-    ('Security Guard', 60000, 3),
-    ('Preparator', 250000, 3),
-    ('HR Leader', 250000, 4),
-    ('HR Assistant', 50000, 4);
+    ('Keeper of Keys', 1000000, 3),
+    ('Dragonologist', 60000, 3),
+    ('Assistant to the Keeper', 250000, 3),
+    ('MR Leader', 250000, 4),
+    ('MR Assistant', 50000, 4);
 
 INSERT INTO employee 
     (first_name, last_name, role_id, manager_id)
@@ -29,7 +29,7 @@ VALUES
     ('Severus', 'Snape', 3, NULL),
     ('Draco', 'Malfoy', 4, 3),
     ('Rubeus', 'Hagrid', 5, NULL),
-    ('Harry', 'Potter', 6, 5),
-    ('Ronald', 'Weasley', 7, 5),
-    ('Remus', 'Lupin', 8, NULL),
+    ('Charlie', 'Weasley', 6, 5),
+    ('Neville', 'Longbottom', 7, 5),
+    ('Charity', 'Burbage', 8, NULL),
     ('Hermione', 'Granger', 9, 8);

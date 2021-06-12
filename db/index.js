@@ -46,12 +46,16 @@ class DB {
             employee.last_name,
             role.title,
             role.salary,
+            department.name,
             employee.manager_id
          FROM
             employee
          LEFT JOIN
             role ON
             employee.role_id = role.id
+         LEFT JOIN
+            department ON
+            role.department_id = department.id
          `
       );
    }
@@ -74,9 +78,7 @@ class DB {
          INSERT INTO
             role 
          SET
-            title = '?',
-            salary = '?',
-            department_id = '?'
+            ?
          `,
          role
       );
@@ -88,27 +90,24 @@ class DB {
          INSERT INTO
             employee
          SET
-            first_name = '?',
-            last_name = '?',
-            role_id = '?',
-            manager_id = '?'
+            ?
          `,
          employee
       );
    }
 
-   updateEmployee(employee) {
+   updateEmployee(role_id, employee_id) {
       return this.connection.query(
          `
          UPDATE 
             employee
-         WHERE
-            id = '?',
          SET
             role_id = '?'
+         WHERE
+            id = '?'
 
          `,
-         employee
+         [role_id, employee_id]
       );
    }
 }
